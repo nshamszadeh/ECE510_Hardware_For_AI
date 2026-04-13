@@ -326,6 +326,7 @@ With AI ≈ 54 FLOP/byte, the encoder sits in the **memory-bandwidth-bound** reg
 hardware (CPU/GPU ridge points are typically 100–1000 FLOP/byte). This is a direct consequence of
 the weight-dominant byte traffic: the 61.3 MB of parameters must be streamed from DRAM for every
 1-second inference frame, while the compute is only 3.45 GFLOPs.
+**Note that the calculated roofline and kernel placements for our CPU shows the kernel is compute-bound rather than memory-bound; however this roofline plot does not take into account overflow of the encoder weight set out of the L3 cache. More detailed explanation for this discrepency is in partition_rationale.md**.
 
 A custom hardware accelerator improves this by:
 1. **On-chip SRAM weight storage** — weights are loaded once at startup and reused across frames,
