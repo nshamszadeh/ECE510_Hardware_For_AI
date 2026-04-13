@@ -7,7 +7,7 @@ Since this profilng was done on a general-purpose PC laptop, it was inferred tha
 
 At this point, claude code noticed that torchinfo was miscounting the FLOPs when profiling `cached_conv` operations. A detailed explanation for why this was happening is given in §2. With this in mind, FLOPs were analytically derived for the inference stages that utilized `cached_conv` routines. FLOP derivation for the encoder stage is in §3. FLOP derivation for the decoder stage is in §5 Corresponding arithmetic intensities were calculated using these analytically derive values where appropriate. Stages that did not use `cached_conv` routines were profiled using the torchinfo output.
 
-**The corrected dominant kernel identification is in §6**
+**The corrected dominant kernel identification is in §8**
 
 ## 1. Dominant Kernel Identification Using Torchinfo
 
@@ -320,7 +320,9 @@ $$AI = \frac{\text{FLOPs}}{\text{Bytes}} = \frac{3{,}448{,}332{,}288}{64{,}444{,
 
 ---
 
-## 6. Interpretation and Final Dominant Kernel Identification
+## 8. Interpretation and Final Dominant Kernel Identification
+
+**The dominant kernel is the VariationalEncoder (EncoderV2), accounting for 48.9% of total inference runtime** (24.87 ms of 51.44 ms profiler total). The dominant low-level operation within it is `aten::mkldnn_convolution`, which accounts for 76.9% of total profiler CPU time and originates from the encoder's strided and dilated Conv1d layers.
 
 With AI ≈ 54 FLOP/byte, the encoder sits in the **memory-bandwidth-bound** regime on conventional
 hardware (CPU/GPU ridge points are typically 100–1000 FLOP/byte). This is a direct consequence of
