@@ -1,0 +1,34 @@
+rm -f results.xml
+"make" -f Makefile results.xml
+make[1]: Entering directory '/home/spacebar/School/ece510/ECE510_Hardware_For_AI/project/m2/tb'
+/usr/bin/iverilog -o sim_build/compute_core/sim.vvp -s compute_core -g2012 -g2012 -f sim_build/compute_core/cmds.f  /home/spacebar/School/ece510/ECE510_Hardware_For_AI/project/m2/rtl/mac_lane.sv /home/spacebar/School/ece510/ECE510_Hardware_For_AI/project/m2/rtl/mac_array.sv /home/spacebar/School/ece510/ECE510_Hardware_For_AI/project/m2/rtl/leaky_relu.sv /home/spacebar/School/ece510/ECE510_Hardware_For_AI/project/m2/rtl/weight_sram.sv /home/spacebar/School/ece510/ECE510_Hardware_For_AI/project/m2/rtl/actv_buf.sv /home/spacebar/School/ece510/ECE510_Hardware_For_AI/project/m2/rtl/layer_control_fsm.sv /home/spacebar/School/ece510/ECE510_Hardware_For_AI/project/m2/rtl/compute_core.sv
+rm -f results.xml
+COCOTB_TEST_MODULES=test_compute_core COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=compute_core TOPLEVEL_LANG=verilog \
+         /usr/bin/vvp -M /home/spacebar/venv/lib/python3.13/site-packages/cocotb/libs -m libcocotbvpi_icarus   sim_build/compute_core/sim.vvp   
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.13.0rc1 interpreter at /home/spacebar/venv/bin/python3
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Icarus Verilog version 12.0 (stable)
+     0.00ns INFO     cocotb                             Seeding Python random module with 1777844406
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /home/spacebar/venv/lib/python3.13/site-packages/cocotb
+     0.00ns INFO     cocotb.regression                  pytest not found, install it to enable better AssertionError messages
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_compute_core.test_weight_load_ready (1/2)
+                                                            s_ready stays low until w_load_done; m_valid stays low in ST_IDLE.
+    50.00ns INFO     cocotb.compute_core                test_weight_load_ready: PASSED
+    50.00ns INFO     cocotb.regression                  test_compute_core.test_weight_load_ready passed
+    50.00ns INFO     cocotb.regression                  running test_compute_core.test_full_pipeline (2/2)
+                                                            Full 10-layer pipeline smoke test with all-zero weights.
+    80.00ns INFO     cocotb.compute_core                Zeroing weight SRAM (177632 words)…
+1776400.00ns INFO     cocotb.compute_core                Weight SRAM zeroed.
+3601030.00ns INFO     cocotb.compute_core                m_valid asserted; asserting m_ready to complete handshake
+3601060.00ns INFO     cocotb.compute_core                test_full_pipeline: PASSED
+3601060.00ns INFO     cocotb.regression                  test_compute_core.test_full_pipeline passed
+3601060.00ns INFO     cocotb.regression                  **************************************************************************************************
+                                                         ** TEST                                      STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                         **************************************************************************************************
+                                                         ** test_compute_core.test_weight_load_ready   PASS          50.00           0.08        658.26  **
+                                                         ** test_compute_core.test_full_pipeline       PASS     3601010.00          25.85     139304.54  **
+                                                         **************************************************************************************************
+                                                         ** TESTS=2 PASS=2 FAIL=0 SKIP=0                        3601060.00          25.93     138891.54  **
+                                                         **************************************************************************************************
+make[1]: Leaving directory '/home/spacebar/School/ece510/ECE510_Hardware_For_AI/project/m2/tb'
