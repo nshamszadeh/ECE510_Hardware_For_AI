@@ -1,0 +1,6 @@
+─── Results ───────────────────────────
+PASS  out[0] = -40
+PASS  out[1] = 0
+PASS  out[2] = -20
+PASS  out[3] = -20
+─── 4 passed, 0 failed ────────────
